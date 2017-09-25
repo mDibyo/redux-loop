@@ -7,7 +7,7 @@
 * [`getCmd(loop)`](#getcmdloop-cmd--null)
 * [`isLoop(object)`](#isloopobject-boolean)
 * [`Cmds`](#cmds)
-  * [`Cmd.none()`](#cmdnone)
+  * [`Cmd.none`](#cmdnone)
   * [`Cmd.action(actionToDispatch)`](#cmdactionactiontodispatch)
   * [`Cmd.run(func, options)`](#cmdrunfunc-options)
   * [`Cmd.list(cmds, options)`](#cmdlistcmds-options)
