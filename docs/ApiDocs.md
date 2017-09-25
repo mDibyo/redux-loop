@@ -212,7 +212,7 @@ it doesn't cause any side effects to actually occur.
 
 return loop(
   { ...state, someProp: action.payload },
-  Cmd.none()
+  Cmd.none
 );
 
 // ...
@@ -274,7 +274,7 @@ the fail action creator is only used if an error is thrown.
 
 If a Run Cmd is used in a list with batch set to true and func returns a promise, the list will not
 finish until the returned promise resolves/rejects. If a promise is not returned, the batched list
-does not wait. You can prevent waiting for a single long-running Cmd (even if a promise is returned) by using the forceSync option on that individual Cmd.
+does not wait. You can prevent waiting for a single long-running asynchronous Cmd by using the forceSync option on that individual Cmd. If you do, you won't be able to use the action creator options to handle the result of the Cmd.
 
 #### Examples
 
@@ -327,8 +327,8 @@ function reducer(state , action) {
 
 * `cmds: Array<Cmd>` &ndash; an array of cmds returned by any of the
   other cmd functions, or even nested calls to `Cmd.list`.
-* `options.sequence: boolean` &ndash; If true, cmds will wait for the previous cmd to finish before starting. Defaults to false.
-* `options.batch: boolean` &ndash; By default, actions from nested cmds will be dispatched as soon as that cmd finishes. If batch is true, no actions will be dispatched until all of the cmds are finished. The actions will be dispatched in the order of the original cmd array.
+* `options.sequence: boolean` &ndash; By default, asynchronous Cmds all run immediately and in parallel. If sequence is true, cmds will wait for the previous cmd to resolve before starting. Note: this does not have an effect if all Cmds are synchronous.
+* `options.batch: boolean` &ndash; By default, actions from nested cmds will be dispatched as soon as that cmd finishes. If batch is true, no actions will be dispatched until all of the cmds are resolved/finished. The actions will then be dispatched all at once in the order of the original cmd array.
 
 #### Notes
 
