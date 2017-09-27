@@ -1,4 +1,4 @@
-import { Action, ActionCreator, AnyAction, StoreEnhancer, Store } from 'redux';
+import { Action, ActionCreator, StoreEnhancer, Store } from 'redux';
 
 export interface StoreCreator {
   <S, A extends Action>(
@@ -11,11 +11,11 @@ export interface StoreCreator {
 export type Loop<S, A extends Action> = [S, CmdType<A>];
 
 export interface LoopReducer<S, A extends Action> {
-  (state: S | undefined, action: AnyAction): S | Loop<S, A>;
+  (state: S | undefined, action: Action): S | Loop<S, A>;
 }
 
 export interface LiftedLoopReducer<S, A extends Action> {
-  (state: S | undefined, action: AnyAction): Loop<S, A>;
+  (state: S | undefined, action: Action): Loop<S, A>;
 }
 
 export interface NoneCmd {
@@ -95,11 +95,11 @@ declare class Cmd {
   ) => SequenceCmd<A>;
 }
 
-export type ReducerMapObject<S, A extends Action = AnyAction> = {
+export type ReducerMapObject<S, A extends Action> = {
   [K in keyof S]: LoopReducer<S[K], A>;
 }
 
-declare function combineReducers<S, A extends Action = AnyAction>(
+declare function combineReducers<S, A extends Action>(
   reducers: ReducerMapObject<S, A>
 ): LiftedLoopReducer<S, A>;
 
@@ -109,6 +109,6 @@ declare function liftState<S, A extends Action>(
 
 declare function isLoop(test: any): boolean;
 
-declare function getModel<S>(loop: S | Loop<S, AnyAction>): S;
+declare function getModel<S>(loop: S | Loop<S, Action>): S;
 
 declare function getCmd<A extends Action>(a: any): CmdType<A> | null;
